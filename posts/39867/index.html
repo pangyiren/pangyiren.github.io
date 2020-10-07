@@ -1,0 +1,217 @@
+<!DOCTYPE html><html lang="zh-CN" data-default-color-scheme="&#34;auto&#34;"><head><meta charset="UTF-8"><link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png"><link rel="icon" type="image/png" href="/img/favicon.ico"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,shrink-to-fit=no"><meta http-equiv="x-ua-compatible" content="ie=edge"><meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"><meta name="theme-color" content="#2f4154"><meta name="description" content="My own blog."><meta name="author" content="yrPang"><meta name="keywords" content=""><title>Nginx学习笔记（二） - yrPang</title><link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css"><link rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css"><link rel="stylesheet" href="/lib/hint/hint.min.css"><link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/tomorrow-night.min.css"><link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_pf9vaxs7x7b.css"><link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css"><link rel="stylesheet" href="/css/main.css"><script src="/js/utils.js"></script><script src="/js/color-schema.js"></script><meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="yrPang" type="application/atom+xml"></head><body><header style="height:100vh"><nav id="navbar" class="navbar fixed-top navbar-expand-lg navbar-dark scrolling-navbar"><div class="container"><a class="navbar-brand" href="/">&nbsp;<strong>yrPang</strong>&nbsp;</a> <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><div class="animated-icon"><span></span><span></span><span></span></div></button><div class="collapse navbar-collapse" id="navbarSupportedContent"><ul class="navbar-nav ml-auto text-center"><li class="nav-item"><a class="nav-link" href="/"><i class="iconfont icon-home-fill"></i> 首页</a></li><li class="nav-item"><a class="nav-link" href="/archives/"><i class="iconfont icon-archive-fill"></i> 归档</a></li><li class="nav-item"><a class="nav-link" href="/categories/"><i class="iconfont icon-category-fill"></i> 分类</a></li><li class="nav-item"><a class="nav-link" href="/tags/"><i class="iconfont icon-tags-fill"></i> 标签</a></li><li class="nav-item"><a class="nav-link" href="/atom.xml"><i class="iconfont icon-rss-fill"></i> RSS</a></li><li class="nav-item"><a class="nav-link" href="/about/"><i class="iconfont icon-user-fill"></i> 关于</a></li><li class="nav-item"><a class="nav-link" href="/links/"><i class="iconfont icon-link-fill"></i> 友链</a></li><li class="nav-item" id="search-btn"><a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i class="iconfont icon-search"></i>&nbsp;</a></li><li class="nav-item" id="color-toggle-btn"><a class="nav-link" href="javascript:">&nbsp;<i class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a></li></ul></div></div></nav><div class="banner intro-2" id="background" parallax="true" style="background:url(https://myblog-1254913510.file.myqcloud.com/cffn9.jpg) no-repeat center center;background-size:cover"><div class="full-bg-img"><div class="mask flex-center" style="background-color:rgba(0,0,0,.3)"><div class="container page-header text-center fade-in-up"><span class="h2" id="subtitle"></span><div class="mt-3"><span class="post-meta"><i class="iconfont icon-date-fill" aria-hidden="true"></i> <time datetime="2020-01-31 10:07" pubdate>2020年1月31日 上午</time></span></div><div class="mt-1"><span class="post-meta mr-2"><i class="iconfont icon-chart"></i> 1.6k 字 </span><span class="post-meta mr-2"><i class="iconfont icon-clock-fill"></i> 19 分钟 </span><span id="leancloud-post-views-container" class="post-meta" style="display:none"><i class="iconfont icon-eye" aria-hidden="true"></i> <span id="leancloud-post-views"></span> 次</span></div></div><div class="scroll-down-bar"><i class="iconfont icon-arrowdown"></i></div></div></div></div></header><main><div class="container-fluid"><div class="row"><div class="d-none d-lg-block col-lg-2"></div><div class="col-lg-8 nopadding-md"><div class="container nopadding-md" id="board-ctn"><div class="py-5" id="board"><article class="post-content mx-auto" id="post"><h1 style="display:none">Nginx学习笔记（二）</h1><div class="markdown-body" id="post-body"><p>http模块的配置指令</p><h2 id="前期准备阶段（框架代码处理）"><a href="#前期准备阶段（框架代码处理）" class="headerlink" title="前期准备阶段（框架代码处理）"></a>前期准备阶段（框架代码处理）</h2><h3 id="listen语句"><a href="#listen语句" class="headerlink" title="listen语句"></a>listen语句</h3><p>文档 <a href="https://nginx.org/en/docs/http/ngx_http_core_module.html#listen">https://nginx.org/en/docs/http/ngx_http_core_module.html#listen</a></p><p><strong>用sock和本地端口的区别</strong></p><p>通过sock不需要走Linux完整网络模型速度更快</p><h3 id="server-name语句"><a href="#server-name语句" class="headerlink" title="server_name语句"></a>server_name语句</h3><h4 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h4><ul><li><p>指定多个域名，第一个为<strong>主域名</strong></p><blockquote><p>Syntax: server_name_in_redirect on | off;<br>Default: server_name_in_redirect off;<br>Context: http, server, location</p></blockquote></li></ul><p>主域名的作用是当<code>server_name_in_redirect</code>设置为<code>on</code> 的时候重定向会将domain改为主域名</p><p>e.g.</p><div class="hljs"><pre><code class="hljs nginx">server&#123;
+  <span class="hljs-attribute">server_name</span> primary.test.com second.test.com;
+	<span class="hljs-attribute">server_name_in_redirect</span> <span class="hljs-literal">on</span>;
+  
+  <span class="hljs-attribute">return</span> <span class="hljs-number">302</span> /redirect;
+  
+&#125;</code></pre></div><p>这样在返回的时候会重定向到<code>http://primary.test.com/redirect</code></p><ul><li><p>泛域名</p><p>*.test.com</p><p>test.com/*</p><p>只支持在最前或最后</p></li><li><p>正则表达式</p><p>加前缀~^test/.com\/\d{2}$</p><p>正则表达式可以使用()创建变量</p><p>e.g.</p><div class="hljs"><pre><code class="hljs nginx">server&#123;
+  <span class="hljs-attribute">server_name</span> ~^(www\.)?(.+);
+  <span class="hljs-attribute">location</span> / &#123;
+    <span class="hljs-attribute">root</span> /site/<span class="hljs-variable">$2</span>;
+  &#125;
+&#125;</code></pre></div></li><li><p>其它</p><ul><li><code>.test.com</code> 可以用来匹配<code>test.com</code> 和<code>*.test.com</code></li><li><code>_</code>匹配所有</li><li><code>&quot;&quot;</code> 匹配没有传递<code>Host</code> 头部的</li></ul></li></ul><h4 id="匹配顺序"><a href="#匹配顺序" class="headerlink" title="匹配顺序"></a>匹配顺序</h4><ol><li>精确匹配</li><li>*在前的泛域名</li><li>*在后的泛域名</li><li>正则表达式匹配(多次匹配的按照顺序进行选择)</li><li>匹配失败 —&gt; default server<ul><li>不指定则为第一个</li><li>listen语句可以用default指定</li></ul></li></ol><h2 id="Http请求的11个阶段"><a href="#Http请求的11个阶段" class="headerlink" title="Http请求的11个阶段"></a>Http请求的11个阶段</h2><div class="table-container"><table><thead><tr><th style="text-align:center">阶段</th><th style="text-align:center">模块</th></tr></thead><tbody><tr><td style="text-align:center">POST_READ</td><td style="text-align:center">realip</td></tr><tr><td style="text-align:center">SERVER_REWRITE</td><td style="text-align:center">rewrite</td></tr><tr><td style="text-align:center">FIND_CONFIG</td><td style="text-align:center"></td></tr><tr><td style="text-align:center">REWRITE</td><td style="text-align:center">rewrite</td></tr><tr><td style="text-align:center">POST_REWRITE</td><td style="text-align:center"></td></tr><tr><td style="text-align:center">PREACCESS</td><td style="text-align:center">limt_conn, limt_req</td></tr><tr><td style="text-align:center">ACCESS</td><td style="text-align:center">auth_basic, access, auth_request</td></tr><tr><td style="text-align:center">POST_ACCESS</td><td style="text-align:center"></td></tr><tr><td style="text-align:center">PRECONTENT</td><td style="text-align:center">try_files</td></tr><tr><td style="text-align:center">CONTENT</td><td style="text-align:center">Index, autoindex, concat</td></tr><tr><td style="text-align:center">LOG</td><td style="text-align:center">access_log</td></tr></tbody></table></div><h2 id="rewrite模块"><a href="#rewrite模块" class="headerlink" title="rewrite模块"></a>rewrite模块</h2><h3 id="return指令"><a href="#return指令" class="headerlink" title="return指令"></a>return指令</h3><div class="hljs"><pre><code class="hljs nginx"><span class="hljs-attribute">return</span> code [text]
+return code URL
+return URL</code></pre></div><div class="table-container"><table><thead><tr><th style="text-align:center">状态码</th><th style="text-align:center">标准</th><th style="text-align:center">意义</th></tr></thead><tbody><tr><td style="text-align:center">301</td><td style="text-align:center">http1.0</td><td style="text-align:center">永久重定向</td></tr><tr><td style="text-align:center">302</td><td style="text-align:center">http1.0</td><td style="text-align:center">临时重定向，禁止缓存</td></tr><tr><td style="text-align:center">303</td><td style="text-align:center">http1.1</td><td style="text-align:center">临时重定向，禁止缓存，<strong>允许</strong>改变方法</td></tr><tr><td style="text-align:center">307</td><td style="text-align:center">http1.1</td><td style="text-align:center">临时重定向，禁止缓存，<strong>不允许</strong>改变方法</td></tr><tr><td style="text-align:center">308</td><td style="text-align:center">http1.1</td><td style="text-align:center">永久重定向，不允许改变方法</td></tr><tr><td style="text-align:center">444</td><td style="text-align:center">nginx自定义</td><td style="text-align:center">立即关闭连接，不反回数据</td></tr></tbody></table></div><h3 id="error-page指令"><a href="#error-page指令" class="headerlink" title="error_page指令"></a>error_page指令</h3><div class="hljs"><pre><code class="hljs nginx">1. error_page 404 /404.html;
+2. error_page 500 502 503 504 /50x.html;
+3. error_page 404 =200 /empty.gif;
+4. error_page 404 = /404.php;
+5. location / &#123;
+			<span class="hljs-attribute">error_page</span> <span class="hljs-number">404</span> = <span class="hljs-variable">@fallback</span>; 
+		&#125;
+			<span class="hljs-attribute">location</span> <span class="hljs-variable">@fallback</span> &#123;
+			<span class="hljs-attribute">proxy_pass</span> http://backend;
+		&#125;
+6. error_page 403 http://example.com/forbidden.html;
+7. error_page 404 =301 http://example.com/notfound.html</code></pre></div><p>rewrite指令在两个阶段都可能出现，此时要注意执行顺序</p><h3 id="rewrite指令"><a href="#rewrite指令" class="headerlink" title="rewrite指令"></a>rewrite指令</h3><blockquote><p>Syntax: rewrite regex replacement [flag];</p></blockquote><ul><li><p>作用是将regex替换成replacement</p></li><li><p>regex可以使用正则表达式和分组生成新变量</p></li><li><p>如果relacement以<code>http://</code>或<code>https://</code> 或<code>$schema</code> 开头直接返回302</p></li><li><p>flag：</p><p>| flag | 意义 |<br>| :———-: | :————————————————————: |<br>| last | 用replacement进行新的location匹配 |<br>| break | 停止当前脚本的执行,停止rewrite模块其他指令 |<br>| redirect | 返回302重定向 |<br>| permanent | 返回301重定向 |</p><p><img src="https://myblog-1254913510.file.myqcloud.com/ojl2j.png" srcset="/img/loading.gif" style="zoom:50%"></p><p>1 会按顺序执行</p><p>2 返回3.txt的内容 返回3.txt的内容 返回”third”</p><p>3 emmm</p></li></ul><div class="hljs"><pre><code class="hljs nginx"><span class="hljs-attribute">rewrite_log</span> <span class="hljs-literal">on</span>
+error_log ...</code></pre></div><p>开启可以记录下所有重定向记录</p><h3 id="if指令"><a href="#if指令" class="headerlink" title="if指令"></a>if指令</h3><p><img src="https://myblog-1254913510.file.myqcloud.com/flew1.png" srcset="/img/loading.gif" style="zoom:50%"></p><h2 id="find-config-阶段-location-指令"><a href="#find-config-阶段-location-指令" class="headerlink" title="find_config 阶段 location 指令"></a>find_config 阶段 location 指令</h2><blockquote><p>Syntax: <code>location [ = | ~ | ~* | ^~ ] uri &#123; ... &#125;</code><br>location @name { … }<br>Default: —<br>Context: server, location</p><p>Syntax: merge_slashes on | off;<br>Default:<br>merge_slashes on;<br>Context: http, server</p></blockquote><p>URL常见有有如下几种</p><ol><li>前缀字符串<ol><li>常规</li><li>=：精确匹配</li><li>^~：匹配上后则不再进行正则匹配</li></ol></li><li>正则表达式<ol><li>~：大小写敏感</li><li>~*：忽略大小写</li></ol></li><li>用于内部跳转的命名：@name</li><li>合并连续的/号：<code>merge_slashes on</code></li></ol><h3 id="匹配顺序："><a href="#匹配顺序：" class="headerlink" title="匹配顺序："></a>匹配顺序：</h3><p><img src="https://myblog-1254913510.file.myqcloud.com/0do7t.png" srcset="/img/loading.gif" style="zoom:50%"></p><p>首先进行前缀匹配，发现<code>=</code>或者<code>^~</code>匹配则直接使用，否则记住最长匹配，按文件顺序进行正则表达式匹配，匹配则直接采用否则继续匹配，若均不匹配则使用上面记录的最长匹配。</p><h2 id="PREACCESS阶段"><a href="#PREACCESS阶段" class="headerlink" title="PREACCESS阶段"></a>PREACCESS阶段</h2><h3 id="limit-conn模块-限制并发连接数"><a href="#limit-conn模块-限制并发连接数" class="headerlink" title="limit_conn模块(限制并发连接数)"></a>limit_conn模块(限制并发连接数)</h3><p>默认编译</p><p>使用共享内存，生效于全部worker</p><p>限制有效性取决于key的设计：postread阶段的realip模块获得的真实ip</p><p>主要指令：</p><ol><li><p>定义共享内存以及key</p><p><code>limit_conn_zone key zone=name:size</code></p><p>key可以取<code>$remote_addr</code> <code>binary_remote_addr</code>等</p></li><li><p><code>limit_conn zone number</code></p></li></ol><p>日志相关指令：</p><p><code>limit_con_log_level</code>控制日志级别</p><p><code>limit_conn_status</code>控制返回错误码</p><h3 id="limit-request模块-限制每个客户端每秒请求数"><a href="#limit-request模块-限制每个客户端每秒请求数" class="headerlink" title="limit_request模块(限制每个客户端每秒请求数)"></a>limit_request模块(限制每个客户端每秒请求数)</h3><p>默认编译</p><p>使用共享内存，生效于全部worker</p><p>算法：leaky bucket算法</p><p>主要指令：</p><ol><li><p>定义共享内存<code>limit_req_zone key zone=name:size rate=rate ;</code></p></li><li><p>限制并发连接数<code>limit_req zone=name [burst=number] [nodelay];</code></p><ul><li>burst默认为0</li><li>nodelay立即处理不做延时</li></ul></li></ol><p>日志相关: <code>limit_req_log_level</code>和<code>limit_conn_status</code></p><p><strong>另：同时打开时<code>limit_request模块</code>优先生效</strong></p><h2 id="ACCESS阶段"><a href="#ACCESS阶段" class="headerlink" title="ACCESS阶段"></a>ACCESS阶段</h2><h3 id="access模块"><a href="#access模块" class="headerlink" title="access模块"></a>access模块</h3><p>指令：</p><p><code>allow</code>和<code>deny</code></p><h3 id="auth-basic模块"><a href="#auth-basic模块" class="headerlink" title="auth_basic模块"></a>auth_basic模块</h3><p>用户认证模块</p><p><code>auth_basic</code>和<code>auth_basic_user_file</code></p><h3 id="auth-request使用第三方权限验证系统-默认未编译"><a href="#auth-request使用第三方权限验证系统-默认未编译" class="headerlink" title="auth_request使用第三方权限验证系统(默认未编译)"></a>auth_request使用第三方权限验证系统(默认未编译)</h3><p><code>auth_request</code>和<code>auth_request_set</code></p><h3 id="对上面三个模块做限制的satisfy指令"><a href="#对上面三个模块做限制的satisfy指令" class="headerlink" title="对上面三个模块做限制的satisfy指令"></a>对上面三个模块做限制的<code>satisfy</code>指令</h3><p><code>satisfy all | any;</code></p><p>all:必须所有模块放行才可以</p><p>any:任何一个放行就可以</p><h3 id="注意问题"><a href="#注意问题" class="headerlink" title="注意问题"></a>注意问题</h3><ol><li>如果有return则不生效，即使在前面也不生效</li><li>模块间顺序有影响</li></ol><p><img src="https://myblog-1254913510.file.myqcloud.com/ybba0.png" srcset="/img/loading.gif" style="zoom:50%"></p><h2 id="PRECONTENT阶段"><a href="#PRECONTENT阶段" class="headerlink" title="PRECONTENT阶段"></a>PRECONTENT阶段</h2><h3 id="try-files指令"><a href="#try-files指令" class="headerlink" title="try_files指令"></a>try_files指令</h3><p>依次试图访问各个文件[没有的话返回code]<code>try_files file ... [=code];</code></p><p>应用：反向代理时可以先尝试在本地找，没有的话去上游</p><h3 id="mirror模块"><a href="#mirror模块" class="headerlink" title="mirror模块"></a>mirror模块</h3><p>流量拷贝</p><p>处理请求时，生成子请求访问其他服务，对子请求的返回值不做请求</p><p><code>mirror</code>和<code>mirror_request_body</code></p><h2 id="CONTENT阶段"><a href="#CONTENT阶段" class="headerlink" title="CONTENT阶段"></a>CONTENT阶段</h2><h3 id="static模块-root和alias模块"><a href="#static模块-root和alias模块" class="headerlink" title="static模块(root和alias模块)"></a>static模块(root和alias模块)</h3><h4 id="功能："><a href="#功能：" class="headerlink" title="功能："></a>功能：</h4><p>将url映射为静态文件提供访问</p><h4 id="root和alias之间的差别："><a href="#root和alias之间的差别：" class="headerlink" title="root和alias之间的差别："></a>root和alias之间的差别：</h4><ol><li>root会将location映射进文件路径，alias只会将location后的url映射</li><li>root有默认配置<code>html</code></li><li>content只能用在location里,root有上下文可以继承上文</li></ol><p>例子<br><div class="hljs"><pre><code class="hljs nginx"><span class="hljs-attribute">location</span> /root&#123;
+  <span class="hljs-attribute">root</span> html;
+&#125;
+
+<span class="hljs-attribute">loaction</span> /alias&#123;
+  <span class="hljs-attribute">alias</span> html
+&#125;</code></pre></div></p><p>则访问<code>/root</code>会访问<code>html/root</code>，<code>/alias</code>则是<code>/html</code></p><h4 id="几个变量"><a href="#几个变量" class="headerlink" title="几个变量"></a>几个变量</h4><div class="table-container"><table><thead><tr><th style="text-align:center">变量</th><th style="text-align:center">值</th></tr></thead><tbody><tr><td style="text-align:center">request_filename</td><td style="text-align:center">待访问文件完整路径</td></tr><tr><td style="text-align:center">document_root</td><td style="text-align:center">由URL和root/alias规则生成的文件夹路径</td></tr><tr><td style="text-align:center">realpath_root</td><td style="text-align:center">将document_root替换为真实路径(解决软连接等)</td></tr></tbody></table></div><h4 id="content-type"><a href="#content-type" class="headerlink" title="content-type"></a>content-type</h4><p><img src="https://myblog-1254913510.file.myqcloud.com/xl6zt.png" srcset="/img/loading.gif" style="zoom:50%"></p><p>日志：<code>log_not_found on|off</code></p><h4 id="当访问目标是目录但是没有带-的处理"><a href="#当访问目标是目录但是没有带-的处理" class="headerlink" title="当访问目标是目录但是没有带/的处理"></a>当访问目标是目录但是没有带<code>/</code>的处理</h4><p>会触发301重定向</p><p><code>server_name_in_redirect on|off</code> 控制是否返回server_name</p><p><code>port_in_redirect on|off</code> 是否附加端口</p><p><code>absolute_redirect on|off</code> 控制是否返回域名 打开但是<code>server_name</code>为<code>off</code>时返回<code>host</code></p><h3 id="index和auto-index"><a href="#index和auto-index" class="headerlink" title="index和auto_index"></a>index和auto_index</h3><p>当以<code>/</code>结尾时，默认<code>index</code>尝试寻找<code>index.html</code>，<code>auto_index</code>则尝试返回目录</p><p>然而因为<code>index</code>领先<code>auto_index</code>，所以如果目录下存在<code>index</code>指定的文件时就不会返回目录</p><p>一些指令<code>autoindex</code> <code>autoindex_exact_size</code> <code>autoindex_format</code> <code>autoindex_localtime</code></p><h3 id="concat模块"><a href="#concat模块" class="headerlink" title="concat模块"></a>concat模块</h3><p>功能：<br>当页面需要访问多个小文件时，拼接返回提高性能，由阿里巴巴提供</p><p>使用:<br>下载<a href="https://github.com/alibaba/nginx-http-concat">https://github.com/alibaba/nginx-http-concat</a><br>编译时添加<code>--add-module=../nginx-http-concat/</code></p><p><img src="https://myblog-1254913510.file.myqcloud.com/e0gj3.png" srcset="/img/loading.gif" style="zoom:50%"></p><p>未完待续…</p></div><hr><div><div class="post-metas mb-3"><div class="post-meta mr-3"><i class="iconfont icon-category"></i> <a class="hover-with-bg" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a></div><div class="post-meta"><i class="iconfont icon-tags"></i> <a class="hover-with-bg" href="/tags/nginx/">nginx</a></div></div><p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" rel="nofollow noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p><div class="post-prevnext row"><article class="post-prev col-6"><a href="/posts/46563/"><i class="iconfont icon-arrowleft"></i> <span class="hidden-mobile">正则表达式</span> <span class="visible-mobile">上一篇</span></a></article><article class="post-next col-6"><a href="/posts/3009/"><span class="hidden-mobile">Nginx学习笔记（一）</span> <span class="visible-mobile">下一篇</span> <i class="iconfont icon-arrowright"></i></a></article></div></div><article class="comments" id="comments"><div id="vcomments"></div><script>function loadValine(){addScript("https://cdn.staticfile.org/valine/1.4.14/Valine.min.js",function(){new Valine({el:"#vcomments",app_id:"PpDjpxNOCKXQAVpsHUkFA7HH-MdYXbMMI",app_key:"DG0A9hOcBbRJAcVK78aJLY1L",placeholder:"说点什么",path:window.location.pathname,avatar:"retro",meta:["nick","mail","link"],pageSize:"10",lang:"zh-CN",highlight:!1,recordIP:!0,serverURLs:""})})}waitElementVisible("vcomments",loadValine)</script><noscript>Please enable JavaScript to view the <a href="https://valine.js.org" rel="nofollow noopener">comments powered by Valine.</a></noscript></article></article></div></div></div><div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn"><div id="toc"><p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p><div id="tocbot"></div></div></div></div></div></main><a id="scroll-top-button" href="#" role="button"><i class="iconfont icon-arrowup" aria-hidden="true"></i></a><div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable modal-lg" role="document"><div class="modal-content"><div class="modal-header text-center"><h4 class="modal-title w-100 font-weight-bold">搜索</h4><button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="modal-body mx-3"><div class="md-form mb-5"><input type="text" id="local-search-input" class="form-control validate"> <label data-error="x" data-success="v" for="local-search-input">关键词</label></div><div class="list-group" id="local-search-result"></div></div></div></div></div><footer class="mt-5"><div class="text-center py-3"><span>yrPang &copy; 2020</span><br>Powered by <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a> Theme <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><b>Fluid</b></a><br><div class="statistics"><span id="leancloud-site-pv-container" style="display:none">总访问量 <span id="leancloud-site-pv"></span> 次 </span><span id="leancloud-site-uv-container" style="display:none">总访客数 <span id="leancloud-site-uv"></span> 人</span></div></div></footer><script src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js"></script><script src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script><script src="/js/debouncer.js"></script><script src="/js/main.js"></script><script src="/js/lazyload.js"></script><script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js"></script><script src="/js/clipboard-use.js"></script><script defer>(function () {
+    // 查询存储的记录
+    function getRecord(Counter, target) {
+      return new Promise(function (resolve, reject) {
+        Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({target})))
+          .then(resp => resp.json())
+          .then(({results, code, error}) => {
+            if (code === 401) {
+              throw error;
+            }
+            if (results && results.length > 0) {
+              var record = results[0];
+              resolve(record);
+            } else {
+              Counter('post', '/classes/Counter', {target, time: 0})
+                .then(resp => resp.json())
+                .then((record, error) => {
+                  if (error) {
+                    throw error;
+                  }
+                  resolve(record);
+                }).catch(error => {
+                console.error('Failed to create', error);
+                reject(error);
+              });
+            }
+          }).catch((error) => {
+          console.error('LeanCloud Counter Error:', error);
+          reject(error);
+        });
+      })
+    }
+
+    // 发起自增请求
+    function increment(Counter, incrArr) {
+      return new Promise(function (resolve, reject) {
+        Counter('post', '/batch', {
+          "requests": incrArr
+        }).then((res) => {
+          res = res.json();
+          if (res.error) {
+            throw res.error;
+          }
+          resolve(res);
+        }).catch((error) => {
+          console.error('Failed to save visitor count', error);
+          reject(error);
+        });
+      });
+    }
+
+    // 构建自增请求体
+    function buildIncrement(objectId) {
+      return {
+        "method": "PUT",
+        "path": `/1.1/classes/Counter/${ objectId }`,
+        "body": {
+          "time": {
+            '__op': 'Increment',
+            'amount': 1
+          }
+        }
+      }
+    }
+
+    // 校验是否为有效的 UV
+    function validUV() {
+      var key = 'LeanCloud_UV_Flag';
+      var flag = localStorage.getItem(key);
+      if (flag) {
+        // 距离标记小于 24 小时则不计为 UV
+        if (new Date().getTime() - parseInt(flag) <= 86400000) {
+          return false;
+        }
+      }
+      localStorage.setItem(key, new Date().getTime().toString());
+      return true;
+    }
+
+    function addCount(Counter) {
+      var enableIncr = 'true' === 'true' && window.location.hostname !== 'localhost';
+      var getterArr = [];
+      var incrArr = [];
+
+      // 请求 PV 并自增
+      var pvCtn = document.querySelector('#leancloud-site-pv-container');
+      if (pvCtn || enableIncr) {
+        var pvGetter = getRecord(Counter, 'site-pv').then((record) => {
+          incrArr.push(buildIncrement(record.objectId))
+          var ele = document.querySelector('#leancloud-site-pv');
+          if (ele) {
+            ele.innerText = record.time + 1;
+            if (pvCtn) {
+              pvCtn.style.display = 'inline';
+            }
+          }
+        });
+        getterArr.push(pvGetter);
+      }
+
+      // 请求 UV 并自增
+      var uvCtn = document.querySelector('#leancloud-site-uv-container');
+      if (uvCtn || enableIncr) {
+        var uvGetter = getRecord(Counter, 'site-uv').then((record) => {
+          var vuv = validUV();
+          vuv && incrArr.push(buildIncrement(record.objectId))
+          var ele = document.querySelector('#leancloud-site-uv');
+          if (ele) {
+            ele.innerText = record.time + (vuv ? 1 : 0);
+            if (uvCtn) {
+              uvCtn.style.display = 'inline';
+            }
+          }
+        });
+        getterArr.push(uvGetter);
+      }
+
+      // 如果是文章，请求文章的浏览数，并自增
+      if ('true' === 'true') {
+        var viewCtn = document.querySelector('#leancloud-post-views-container');
+        if (viewCtn || enableIncr) {
+          var target = decodeURI('/posts/39867/');
+          var viewGetter = getRecord(Counter, target).then((record) => {
+            incrArr.push(buildIncrement(record.objectId))
+            if (viewCtn) {
+              var ele = document.querySelector('#leancloud-post-views');
+              if (ele) {
+                ele.innerText = (record.time || 0) + 1;
+                viewCtn.style.display = 'inline';
+              }
+            }
+          });
+          getterArr.push(viewGetter);
+        }
+      }
+
+      // 如果启动计数自增，批量发起自增请求
+      if (enableIncr) {
+        Promise.all(getterArr).then(() => {
+          incrArr.length > 0 && increment(Counter, incrArr);
+        })
+      }
+    }
+
+    var app_id = 'PpDjpxNOCKXQAVpsHUkFA7HH-MdYXbMMI'
+    var app_key = 'DG0A9hOcBbRJAcVK78aJLY1L'
+    var server_url = ''
+
+    function fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${ api_server }/1.1${ url }`, {
+          method,
+          headers: {
+            'X-LC-Id': app_id,
+            'X-LC-Key': app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+
+      addCount(Counter);
+    }
+
+    var api_server = app_id.slice(-9) !== '-MdYXbMMI' ? server_url : `https://${ app_id.slice(0, 8).toLowerCase() }.api.lncldglobal.com`;
+
+    if (api_server) {
+      fetchData(api_server);
+    } else {
+      fetch('https://app-router.leancloud.cn/2/route?appId=' + app_id)
+        .then(resp => resp.json())
+        .then(({api_server}) => {
+          fetchData('https://' + api_server);
+        });
+    }
+  })();</script><script src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js"></script><script>$(document).ready(function(){var t=$("#board-ctn").offset().top;tocbot.init({tocSelector:"#tocbot",contentSelector:"#post-body",headingSelector:"h1,h2,h3,h4,h5,h6",linkClass:"tocbot-link",activeLinkClass:"tocbot-active-link",listClass:"tocbot-list",isCollapsedClass:"tocbot-is-collapsed",collapsibleClass:"tocbot-is-collapsible",collapseDepth:0,scrollSmooth:!0,headingsOffset:-t}),0<$(".toc-list-item").length&&$("#toc").css("visibility","visible")})</script><script src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js"></script><script>var typed=new Typed("#subtitle",{strings:["  ","Nginx学习笔记（二）&nbsp;"],cursorChar:"_",typeSpeed:70,loop:!1});typed.stop(),$(document).ready(function(){$(".typed-cursor").addClass("h2"),typed.start()})</script><script src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js"></script><script>anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))</script><script src="/js/local-search.js"></script><script>var path="/local-search.xml",inputArea=document.querySelector("#local-search-input");inputArea.onclick=function(){searchFunc(path,"local-search-input","local-search-result"),this.onclick=null}</script><script src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js"></script><link rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css"><script>$("#post img:not(.no-zoom img, img[no-zoom]), img[zoom]").each(function(){var t=document.createElement("a");$(t).attr("data-fancybox","images"),$(t).attr("href",$(this).attr("src")),$(this).wrap(t)})</script><script defer>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-131692412-1","auto"),ga("send","pageview")</script><script async src="https://www.google-analytics.com/analytics.js"></script></body></html>

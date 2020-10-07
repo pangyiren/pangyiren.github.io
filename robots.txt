@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /tags/
+Disallow: /categories/
+Disallow: /GPG-key/
+
+Sitemap: https://blog.yrpang.com/sitemap.xml

@@ -1,0 +1,310 @@
+<!DOCTYPE html><html lang="zh-CN" data-default-color-scheme="&#34;auto&#34;"><head><meta charset="UTF-8"><link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png"><link rel="icon" type="image/png" href="/img/favicon.ico"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,shrink-to-fit=no"><meta http-equiv="x-ua-compatible" content="ie=edge"><meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"><meta name="theme-color" content="#2f4154"><meta name="description" content="My own blog."><meta name="author" content="yrPang"><meta name="keywords" content=""><title>Tensoflow-logistic-regression - yrPang</title><link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css"><link rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css"><link rel="stylesheet" href="/lib/hint/hint.min.css"><link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/tomorrow-night.min.css"><link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_pf9vaxs7x7b.css"><link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css"><link rel="stylesheet" href="/css/main.css"><script src="/js/utils.js"></script><script src="/js/color-schema.js"></script><meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="yrPang" type="application/atom+xml"></head><body><header style="height:100vh"><nav id="navbar" class="navbar fixed-top navbar-expand-lg navbar-dark scrolling-navbar"><div class="container"><a class="navbar-brand" href="/">&nbsp;<strong>yrPang</strong>&nbsp;</a> <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><div class="animated-icon"><span></span><span></span><span></span></div></button><div class="collapse navbar-collapse" id="navbarSupportedContent"><ul class="navbar-nav ml-auto text-center"><li class="nav-item"><a class="nav-link" href="/"><i class="iconfont icon-home-fill"></i> 首页</a></li><li class="nav-item"><a class="nav-link" href="/archives/"><i class="iconfont icon-archive-fill"></i> 归档</a></li><li class="nav-item"><a class="nav-link" href="/categories/"><i class="iconfont icon-category-fill"></i> 分类</a></li><li class="nav-item"><a class="nav-link" href="/tags/"><i class="iconfont icon-tags-fill"></i> 标签</a></li><li class="nav-item"><a class="nav-link" href="/atom.xml"><i class="iconfont icon-rss-fill"></i> RSS</a></li><li class="nav-item"><a class="nav-link" href="/about/"><i class="iconfont icon-user-fill"></i> 关于</a></li><li class="nav-item"><a class="nav-link" href="/links/"><i class="iconfont icon-link-fill"></i> 友链</a></li><li class="nav-item" id="search-btn"><a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i class="iconfont icon-search"></i>&nbsp;</a></li><li class="nav-item" id="color-toggle-btn"><a class="nav-link" href="javascript:">&nbsp;<i class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a></li></ul></div></div></nav><div class="banner intro-2" id="background" parallax="true" style="background:url(https://myblog-1254913510.file.myqcloud.com/cffn9.jpg) no-repeat center center;background-size:cover"><div class="full-bg-img"><div class="mask flex-center" style="background-color:rgba(0,0,0,.3)"><div class="container page-header text-center fade-in-up"><span class="h2" id="subtitle"></span><div class="mt-3"><span class="post-meta"><i class="iconfont icon-date-fill" aria-hidden="true"></i> <time datetime="2019-05-02 23:43" pubdate>2019年5月2日 晚上</time></span></div><div class="mt-1"><span class="post-meta mr-2"><i class="iconfont icon-chart"></i> 836 字 </span><span class="post-meta mr-2"><i class="iconfont icon-clock-fill"></i> 15 分钟 </span><span id="leancloud-post-views-container" class="post-meta" style="display:none"><i class="iconfont icon-eye" aria-hidden="true"></i> <span id="leancloud-post-views"></span> 次</span></div></div><div class="scroll-down-bar"><i class="iconfont icon-arrowdown"></i></div></div></div></div></header><main><div class="container-fluid"><div class="row"><div class="d-none d-lg-block col-lg-2"></div><div class="col-lg-8 nopadding-md"><div class="container nopadding-md" id="board-ctn"><div class="py-5" id="board"><article class="post-content mx-auto" id="post"><h1 style="display:none">Tensoflow-logistic-regression</h1><div class="markdown-body" id="post-body"><p>之前数模参赛时遇到的一个问题，当时因为比赛的原因不方便马上发，现在发出来。</p><p>在本次数学建模中涉及到了<strong>logistic-regression</strong>模型的应用，简单记录一下<code>Tensorflow</code>的实现。</p><h2 id="1、环境"><a href="#1、环境" class="headerlink" title="1、环境"></a>1、环境</h2><p>我比较偷懒，直接使用了<code>Google Cloud Platform</code>免去了配置<code>Tensorflow</code>环境的麻烦。</p><h2 id="2、代码"><a href="#2、代码" class="headerlink" title="2、代码"></a>2、代码</h2><div class="hljs"><pre><code class="hljs python3">import pandas as pd                # 用于读取数据文件
+import tensorflow as tf
+import matplotlib.pyplot as plt    # 用于画图
+import numpy as np
+
+df &#x3D; pd.read_csv(&quot;input.csv&quot;, header&#x3D;None)
+train_data &#x3D; df.values
+
+print(train_data)
+
+train_X &#x3D; train_data[:, :-1]
+train_y &#x3D; train_data[:, -1:]
+feature_num &#x3D; len(train_X[0])
+sample_num &#x3D; len(train_X)
+print(&quot;Size of train_X: &#123;&#125;x&#123;&#125;&quot;.format(sample_num, feature_num))
+print(&quot;Size of train_y: &#123;&#125;x&#123;&#125;&quot;.format(len(train_y), len(train_y[0])))
+
+X &#x3D; tf.placeholder(tf.float32)
+y &#x3D; tf.placeholder(tf.float32)
+
+W &#x3D; tf.Variable(tf.zeros([feature_num, 1]))
+b &#x3D; tf.Variable([-.9])
+
+db &#x3D; tf.matmul(X, tf.reshape(W, [-1, 1])) + b
+hyp &#x3D; tf.sigmoid(db)
+
+cost0 &#x3D; y * tf.log(hyp)
+cost1 &#x3D; (1 - y) * tf.log(1 - hyp)
+cost &#x3D; (cost0 + cost1) &#x2F; -sample_num
+loss &#x3D; tf.reduce_sum(cost)
+
+optimizer &#x3D; tf.train.GradientDescentOptimizer(0.001)
+train &#x3D; optimizer.minimize(loss)
+
+init &#x3D; tf.global_variables_initializer()
+sess &#x3D; tf.Session()
+sess.run(init)
+
+feed_dict &#x3D; &#123;X: train_X, y: train_y&#125;
+
+for step in range(1000000):
+    sess.run(train, &#123;X: train_X, y: train_y&#125;)
+    if step % 10000 &#x3D;&#x3D; 0:
+        print(step, sess.run(W).flatten(), sess.run(b).flatten())
+
+# 绘图
+
+w &#x3D; [0.7672361 , -0.276697 , -0.19542742]
+b &#x3D; 0.09650069
+
+from mpl_toolkits.mplot3d import Axes3D
+
+x1 &#x3D; train_data[:, 0]
+x2 &#x3D; train_data[:, 1]
+x3 &#x3D; train_data[:, 2]
+y &#x3D; train_data[:, -1:]
+
+fig&#x3D;plt.figure()
+ax&#x3D;Axes3D(fig)
+
+
+for x1p, x2p, x3p, yp in zip(x1, x2, x3, y):
+    if yp &#x3D;&#x3D; 0:
+        ax.scatter(x1p, x2p, x3p, c&#x3D;&#39;r&#39;)
+    else:
+        ax.scatter(x1p, x2p, x3p, c&#x3D;&#39;g&#39;)
+
+ax.set_zlabel(&#39;Z&#39;)  # 坐标轴
+ax.set_ylabel(&#39;Y&#39;)
+ax.set_xlabel(&#39;X&#39;)
+
+
+a &#x3D; 0.7672361
+b &#x3D; -0.276697 
+c &#x3D; -0.19542742
+d &#x3D; 0.09650069
+
+x1 &#x3D; np.linspace(-1,1,10)
+y1 &#x3D; np.linspace(-1,1,10)
+
+X,Y &#x3D; np.meshgrid(x1,y1)
+Z &#x3D; (d - a*X - b*Y) &#x2F; c
+
+fig &#x3D; plt.figure()
+ax &#x3D; fig.gca(projection&#x3D;&#39;3d&#39;)
+
+surf &#x3D; ax.plot_surface(X, Y, Z)</code></pre></div><h2 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h2><div class="hljs"><pre><code class="hljs python3"># Result
+# 0 [ 0.7707945  -0.27244025 -0.19312732] [0.08507074]
+# 10000 [ 0.77019846 -0.2730363  -0.19343074] [0.08675246]
+# 20000 [ 0.76964736 -0.27363235 -0.19366762] [0.08829048]
+# 30000 [ 0.7692501  -0.27412957 -0.19393419] [0.08960892]
+# 40000 [ 0.7689034  -0.27445695 -0.19417214] [0.09070877]
+# 50000 [ 0.7686214  -0.27475497 -0.19436422] [0.09161869]
+# 60000 [ 0.7683936  -0.275053   -0.19451982] [0.09238537]
+# 70000 [ 0.7682283  -0.27535102 -0.19466883] [0.09303201]
+# 80000 [ 0.76810503 -0.27564904 -0.19481784] [0.09360377]
+# 90000 [ 0.76798075 -0.27594706 -0.19491854] [0.09411547]
+# 100000 [ 0.7678499  -0.2761182  -0.19500598] [0.09455331]
+# 110000 [ 0.76773375 -0.27622774 -0.19508578] [0.09492187]
+# 120000 [ 0.7676398  -0.27631634 -0.19515029] [0.0952199]
+# 130000 [ 0.7675626  -0.27638906 -0.19520319] [0.09546462]
+# 140000 [ 0.7674922  -0.27645552 -0.19525155] [0.09568814]
+# 150000 [ 0.76744366 -0.2765014  -0.19528496] [0.09584232]
+# 160000 [ 0.7673967  -0.27654564 -0.19531724] [0.09599134]
+# 170000 [ 0.76735574 -0.27658433 -0.19534537] [0.09612132]
+# 180000 [ 0.76733226 -0.2766065  -0.19536147] [0.09619582]
+# 190000 [ 0.7673087  -0.27662855 -0.1953776 ] [0.09627033]
+# 200000 [ 0.7672852  -0.27665073 -0.1953937 ] [0.09634484]
+# 210000 [ 0.7672618  -0.2766729  -0.19540988] [0.09641934]
+# 220000 [ 0.7672383  -0.2766951  -0.19542597] [0.09649385]
+# 230000 [ 0.7672361  -0.276697   -0.19542742] [0.09650069]
+# 240000 [ 0.7672361  -0.276697   -0.19542742] [0.09650069]
+# 250000 [ 0.7672361  -0.276697   -0.19542742] [0.09650069]
+# 260000 [ 0.7672361  -0.276697   -0.19542742] [0.09650069]
+# 270000 [ 0.7672361  -0.276697   -0.19542742] [0.09650069]
+# 280000 [ 0.7672361  -0.276697   -0.19542742] [0.09650069]
+# 290000 [ 0.7672361  -0.276697   -0.19542742] [0.09650069]
+# 300000 [ 0.7672361  -0.276697   -0.19542742] [0.09650069]
+# 310000 [ 0.7672361  -0.276697   -0.19542742] [0.09650069]
+# 320000 [ 0.7672361  -0.276697   -0.19542742] [0.09650069]
+# 330000 [ 0.7672361  -0.276697   -0.19542742] [0.09650069]
+# 340000 [ 0.7672361  -0.276697   -0.19542742] [0.09650069]
+# 350000 [ 0.7672361  -0.276697   -0.19542742] [0.09650069]
+# 360000 [ 0.7672361  -0.276697   -0.19542742] [0.09650069]
+# 370000 [ 0.7672361  -0.276697   -0.19542742] [0.09650069]</code></pre></div><p><strong>参考资料：</strong><br><a href="https://segmentfault.com/a/1190000009954640">https://segmentfault.com/a/1190000009954640</a><br><a href="http://bbs.bugcode.cn/t/20913">http://bbs.bugcode.cn/t/20913</a></p></div><hr><div><div class="post-metas mb-3"><div class="post-meta mr-3"><i class="iconfont icon-category"></i> <a class="hover-with-bg" href="/categories/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/">数学建模</a></div><div class="post-meta"><i class="iconfont icon-tags"></i> <a class="hover-with-bg" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a> <a class="hover-with-bg" href="/tags/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/">数学建模</a></div></div><p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" rel="nofollow noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p><div class="post-prevnext row"><article class="post-prev col-6"><a href="/posts/9864/"><i class="iconfont icon-arrowleft"></i> <span class="hidden-mobile">[周报]2019年第20周</span> <span class="visible-mobile">上一篇</span></a></article><article class="post-next col-6"><a href="/posts/43826/"><span class="hidden-mobile">访问网页的过程究竟发什么了什么</span> <span class="visible-mobile">下一篇</span> <i class="iconfont icon-arrowright"></i></a></article></div></div><article class="comments" id="comments"><div id="vcomments"></div><script>function loadValine(){addScript("https://cdn.staticfile.org/valine/1.4.14/Valine.min.js",function(){new Valine({el:"#vcomments",app_id:"PpDjpxNOCKXQAVpsHUkFA7HH-MdYXbMMI",app_key:"DG0A9hOcBbRJAcVK78aJLY1L",placeholder:"说点什么",path:window.location.pathname,avatar:"retro",meta:["nick","mail","link"],pageSize:"10",lang:"zh-CN",highlight:!1,recordIP:!0,serverURLs:""})})}waitElementVisible("vcomments",loadValine)</script><noscript>Please enable JavaScript to view the <a href="https://valine.js.org" rel="nofollow noopener">comments powered by Valine.</a></noscript></article></article></div></div></div><div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn"><div id="toc"><p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p><div id="tocbot"></div></div></div></div></div></main><a id="scroll-top-button" href="#" role="button"><i class="iconfont icon-arrowup" aria-hidden="true"></i></a><div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable modal-lg" role="document"><div class="modal-content"><div class="modal-header text-center"><h4 class="modal-title w-100 font-weight-bold">搜索</h4><button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="modal-body mx-3"><div class="md-form mb-5"><input type="text" id="local-search-input" class="form-control validate"> <label data-error="x" data-success="v" for="local-search-input">关键词</label></div><div class="list-group" id="local-search-result"></div></div></div></div></div><footer class="mt-5"><div class="text-center py-3"><span>yrPang &copy; 2020</span><br>Powered by <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a> Theme <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><b>Fluid</b></a><br><div class="statistics"><span id="leancloud-site-pv-container" style="display:none">总访问量 <span id="leancloud-site-pv"></span> 次 </span><span id="leancloud-site-uv-container" style="display:none">总访客数 <span id="leancloud-site-uv"></span> 人</span></div></div></footer><script src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js"></script><script src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script><script src="/js/debouncer.js"></script><script src="/js/main.js"></script><script src="/js/lazyload.js"></script><script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js"></script><script src="/js/clipboard-use.js"></script><script defer>(function () {
+    // 查询存储的记录
+    function getRecord(Counter, target) {
+      return new Promise(function (resolve, reject) {
+        Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({target})))
+          .then(resp => resp.json())
+          .then(({results, code, error}) => {
+            if (code === 401) {
+              throw error;
+            }
+            if (results && results.length > 0) {
+              var record = results[0];
+              resolve(record);
+            } else {
+              Counter('post', '/classes/Counter', {target, time: 0})
+                .then(resp => resp.json())
+                .then((record, error) => {
+                  if (error) {
+                    throw error;
+                  }
+                  resolve(record);
+                }).catch(error => {
+                console.error('Failed to create', error);
+                reject(error);
+              });
+            }
+          }).catch((error) => {
+          console.error('LeanCloud Counter Error:', error);
+          reject(error);
+        });
+      })
+    }
+
+    // 发起自增请求
+    function increment(Counter, incrArr) {
+      return new Promise(function (resolve, reject) {
+        Counter('post', '/batch', {
+          "requests": incrArr
+        }).then((res) => {
+          res = res.json();
+          if (res.error) {
+            throw res.error;
+          }
+          resolve(res);
+        }).catch((error) => {
+          console.error('Failed to save visitor count', error);
+          reject(error);
+        });
+      });
+    }
+
+    // 构建自增请求体
+    function buildIncrement(objectId) {
+      return {
+        "method": "PUT",
+        "path": `/1.1/classes/Counter/${ objectId }`,
+        "body": {
+          "time": {
+            '__op': 'Increment',
+            'amount': 1
+          }
+        }
+      }
+    }
+
+    // 校验是否为有效的 UV
+    function validUV() {
+      var key = 'LeanCloud_UV_Flag';
+      var flag = localStorage.getItem(key);
+      if (flag) {
+        // 距离标记小于 24 小时则不计为 UV
+        if (new Date().getTime() - parseInt(flag) <= 86400000) {
+          return false;
+        }
+      }
+      localStorage.setItem(key, new Date().getTime().toString());
+      return true;
+    }
+
+    function addCount(Counter) {
+      var enableIncr = 'true' === 'true' && window.location.hostname !== 'localhost';
+      var getterArr = [];
+      var incrArr = [];
+
+      // 请求 PV 并自增
+      var pvCtn = document.querySelector('#leancloud-site-pv-container');
+      if (pvCtn || enableIncr) {
+        var pvGetter = getRecord(Counter, 'site-pv').then((record) => {
+          incrArr.push(buildIncrement(record.objectId))
+          var ele = document.querySelector('#leancloud-site-pv');
+          if (ele) {
+            ele.innerText = record.time + 1;
+            if (pvCtn) {
+              pvCtn.style.display = 'inline';
+            }
+          }
+        });
+        getterArr.push(pvGetter);
+      }
+
+      // 请求 UV 并自增
+      var uvCtn = document.querySelector('#leancloud-site-uv-container');
+      if (uvCtn || enableIncr) {
+        var uvGetter = getRecord(Counter, 'site-uv').then((record) => {
+          var vuv = validUV();
+          vuv && incrArr.push(buildIncrement(record.objectId))
+          var ele = document.querySelector('#leancloud-site-uv');
+          if (ele) {
+            ele.innerText = record.time + (vuv ? 1 : 0);
+            if (uvCtn) {
+              uvCtn.style.display = 'inline';
+            }
+          }
+        });
+        getterArr.push(uvGetter);
+      }
+
+      // 如果是文章，请求文章的浏览数，并自增
+      if ('true' === 'true') {
+        var viewCtn = document.querySelector('#leancloud-post-views-container');
+        if (viewCtn || enableIncr) {
+          var target = decodeURI('/posts/20414/');
+          var viewGetter = getRecord(Counter, target).then((record) => {
+            incrArr.push(buildIncrement(record.objectId))
+            if (viewCtn) {
+              var ele = document.querySelector('#leancloud-post-views');
+              if (ele) {
+                ele.innerText = (record.time || 0) + 1;
+                viewCtn.style.display = 'inline';
+              }
+            }
+          });
+          getterArr.push(viewGetter);
+        }
+      }
+
+      // 如果启动计数自增，批量发起自增请求
+      if (enableIncr) {
+        Promise.all(getterArr).then(() => {
+          incrArr.length > 0 && increment(Counter, incrArr);
+        })
+      }
+    }
+
+    var app_id = 'PpDjpxNOCKXQAVpsHUkFA7HH-MdYXbMMI'
+    var app_key = 'DG0A9hOcBbRJAcVK78aJLY1L'
+    var server_url = ''
+
+    function fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${ api_server }/1.1${ url }`, {
+          method,
+          headers: {
+            'X-LC-Id': app_id,
+            'X-LC-Key': app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+
+      addCount(Counter);
+    }
+
+    var api_server = app_id.slice(-9) !== '-MdYXbMMI' ? server_url : `https://${ app_id.slice(0, 8).toLowerCase() }.api.lncldglobal.com`;
+
+    if (api_server) {
+      fetchData(api_server);
+    } else {
+      fetch('https://app-router.leancloud.cn/2/route?appId=' + app_id)
+        .then(resp => resp.json())
+        .then(({api_server}) => {
+          fetchData('https://' + api_server);
+        });
+    }
+  })();</script><script src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js"></script><script>$(document).ready(function(){var t=$("#board-ctn").offset().top;tocbot.init({tocSelector:"#tocbot",contentSelector:"#post-body",headingSelector:"h1,h2,h3,h4,h5,h6",linkClass:"tocbot-link",activeLinkClass:"tocbot-active-link",listClass:"tocbot-list",isCollapsedClass:"tocbot-is-collapsed",collapsibleClass:"tocbot-is-collapsible",collapseDepth:0,scrollSmooth:!0,headingsOffset:-t}),0<$(".toc-list-item").length&&$("#toc").css("visibility","visible")})</script><script src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js"></script><script>var typed=new Typed("#subtitle",{strings:["  ","Tensoflow-logistic-regression&nbsp;"],cursorChar:"_",typeSpeed:70,loop:!1});typed.stop(),$(document).ready(function(){$(".typed-cursor").addClass("h2"),typed.start()})</script><script src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js"></script><script>anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))</script><script src="/js/local-search.js"></script><script>var path="/local-search.xml",inputArea=document.querySelector("#local-search-input");inputArea.onclick=function(){searchFunc(path,"local-search-input","local-search-result"),this.onclick=null}</script><script src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js"></script><link rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css"><script>$("#post img:not(.no-zoom img, img[no-zoom]), img[zoom]").each(function(){var t=document.createElement("a");$(t).attr("data-fancybox","images"),$(t).attr("href",$(this).attr("src")),$(this).wrap(t)})</script><script defer>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-131692412-1","auto"),ga("send","pageview")</script><script async src="https://www.google-analytics.com/analytics.js"></script></body></html>
