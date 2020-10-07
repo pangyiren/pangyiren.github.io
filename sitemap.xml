@@ -2,118 +2,6 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://blog.yrpang.com/posts/8279/</loc>
-    
-    <lastmod>2020-10-07</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.yrpang.com/posts/46563/</loc>
-    
-    <lastmod>2020-10-07</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.yrpang.com/posts/37452/</loc>
-    
-    <lastmod>2020-10-07</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.yrpang.com/posts/7566/</loc>
-    
-    <lastmod>2020-10-07</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.yrpang.com/posts/25327/</loc>
-    
-    <lastmod>2020-10-07</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.yrpang.com/posts/45207/</loc>
-    
-    <lastmod>2020-10-07</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.yrpang.com/posts/43826/</loc>
-    
-    <lastmod>2020-10-07</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.yrpang.com/about/index.html</loc>
-    
-    <lastmod>2020-10-07</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.yrpang.com/posts/4202/</loc>
-    
-    <lastmod>2020-10-07</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.yrpang.com/posts/58401/</loc>
-    
-    <lastmod>2020-10-07</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.yrpang.com/posts/55815/</loc>
-    
-    <lastmod>2020-10-07</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.yrpang.com/posts/47780/</loc>
-    
-    <lastmod>2020-10-07</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.yrpang.com/posts/11118/</loc>
-    
-    <lastmod>2020-10-07</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.yrpang.com/posts/25075/</loc>
-    
-    <lastmod>2020-10-07</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.yrpang.com/posts/22683/</loc>
-    
-    <lastmod>2020-10-07</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.yrpang.com/posts/49243/</loc>
-    
-    <lastmod>2020-10-07</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://blog.yrpang.com/posts/3009/</loc>
     
     <lastmod>2020-10-07</lastmod>
@@ -255,6 +143,118 @@
   
   <url>
     <loc>https://blog.yrpang.com/posts/1444/</loc>
+    
+    <lastmod>2020-10-07</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.yrpang.com/posts/8279/</loc>
+    
+    <lastmod>2020-10-07</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.yrpang.com/posts/46563/</loc>
+    
+    <lastmod>2020-10-07</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.yrpang.com/posts/37452/</loc>
+    
+    <lastmod>2020-10-07</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.yrpang.com/posts/7566/</loc>
+    
+    <lastmod>2020-10-07</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.yrpang.com/posts/25327/</loc>
+    
+    <lastmod>2020-10-07</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.yrpang.com/posts/45207/</loc>
+    
+    <lastmod>2020-10-07</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.yrpang.com/posts/43826/</loc>
+    
+    <lastmod>2020-10-07</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.yrpang.com/about/index.html</loc>
+    
+    <lastmod>2020-10-07</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.yrpang.com/posts/4202/</loc>
+    
+    <lastmod>2020-10-07</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.yrpang.com/posts/58401/</loc>
+    
+    <lastmod>2020-10-07</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.yrpang.com/posts/55815/</loc>
+    
+    <lastmod>2020-10-07</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.yrpang.com/posts/47780/</loc>
+    
+    <lastmod>2020-10-07</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.yrpang.com/posts/11118/</loc>
+    
+    <lastmod>2020-10-07</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.yrpang.com/posts/25075/</loc>
+    
+    <lastmod>2020-10-07</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.yrpang.com/posts/22683/</loc>
+    
+    <lastmod>2020-10-07</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.yrpang.com/posts/49243/</loc>
     
     <lastmod>2020-10-07</lastmod>
     
