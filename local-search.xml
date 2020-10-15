@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>vim速查表</title>
+    <link href="/posts/40855/"/>
+    <url>/posts/40855/</url>
+    
+    <content type="html"><![CDATA[<h2 id="operator"><a href="#operator" class="headerlink" title="operator"></a>operator</h2><div class="table-container"><table><thead><tr><th style="text-align:center">按键</th><th style="text-align:center">作用</th></tr></thead><tbody><tr><td style="text-align:center"><code>x</code></td><td style="text-align:center">删除一个字母</td></tr><tr><td style="text-align:center"><code>d</code></td><td style="text-align:center">删除</td></tr><tr><td style="text-align:center"><code>dd</code></td><td style="text-align:center">删除一行</td></tr><tr><td style="text-align:center"><code>u</code></td><td style="text-align:center">撤销</td></tr><tr><td style="text-align:center"><code>U</code></td><td style="text-align:center">撤销整行</td></tr><tr><td style="text-align:center"><code>Ctrl+R</code></td><td style="text-align:center">重做</td></tr><tr><td style="text-align:center"><code>p</code></td><td style="text-align:center">粘贴</td></tr><tr><td style="text-align:center"><code>r</code></td><td style="text-align:center">替换</td></tr><tr><td style="text-align:center"><code>ce</code></td><td style="text-align:center">更改</td></tr></tbody></table></div><h2 id="motion"><a href="#motion" class="headerlink" title="motion"></a>motion</h2><div class="table-container"><table><thead><tr><th style="text-align:center">按键</th><th style="text-align:center">作用</th></tr></thead><tbody><tr><td style="text-align:center"><code>w</code></td><td style="text-align:center">下一个单词起始位置</td></tr><tr><td style="text-align:center"><code>e</code></td><td style="text-align:center">单词末尾</td></tr><tr><td style="text-align:center"><code>$</code></td><td style="text-align:center">行末</td></tr></tbody></table></div><p>注: num+motion可以重复执行。e.g. <code>2dd</code>会删除两行</p><h2 id="跳转类"><a href="#跳转类" class="headerlink" title="跳转类"></a>跳转类</h2><div class="table-container"><table><thead><tr><th style="text-align:center">按键</th><th style="text-align:center">作用</th></tr></thead><tbody><tr><td style="text-align:center"><code>(num)+G</code></td><td style="text-align:center">(前往第num行)或行尾</td></tr><tr><td style="text-align:center"><code>gg</code></td><td style="text-align:center">首行</td></tr><tr><td style="text-align:center"><code>:(num)</code></td><td style="text-align:center">前往第num行</td></tr></tbody></table></div><h2 id="查找类"><a href="#查找类" class="headerlink" title="查找类"></a>查找类</h2><div class="table-container"><table><thead><tr><th style="text-align:center">按键</th><th style="text-align:center">作用</th></tr></thead><tbody><tr><td style="text-align:center"><code>/</code></td><td style="text-align:center">向前查找</td></tr><tr><td style="text-align:center"><code>?</code></td><td style="text-align:center">向后查找</td></tr><tr><td style="text-align:center"><code>%</code></td><td style="text-align:center">找配对括号</td></tr></tbody></table></div><h2 id="替换类"><a href="#替换类" class="headerlink" title="替换类"></a>替换类</h2><div class="table-container"><table><thead><tr><th style="text-align:center">按键</th><th style="text-align:center">作用</th></tr></thead><tbody><tr><td style="text-align:center"><code>:s/old/new</code></td><td style="text-align:center">替换一处</td></tr><tr><td style="text-align:center"><code>:s/old/new/g</code></td><td style="text-align:center">替换<strong>一行</strong>里的所有</td></tr><tr><td style="text-align:center"><code>:#,#s/old/new/g</code></td><td style="text-align:center">替换#行和#行之间的</td></tr><tr><td style="text-align:center"><code>:%s/old/new/g</code></td><td style="text-align:center">替换<strong>文件</strong>里的所有</td></tr><tr><td style="text-align:center"><code>:%s/old/new/gc</code></td><td style="text-align:center">交互式替换(每一个都问下要不要换)</td></tr></tbody></table></div><h2 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h2><div class="table-container"><table><thead><tr><th style="text-align:center">按键</th><th style="text-align:center">作用</th></tr></thead><tbody><tr><td style="text-align:center"><code>:Ctrl+D</code></td><td style="text-align:center">自动补全命令</td></tr><tr><td style="text-align:center"><code>:!命令</code></td><td style="text-align:center">执行命令</td></tr><tr><td style="text-align:center"><code>:w+名字</code></td><td style="text-align:center">另存为</td></tr><tr><td style="text-align:center"><code>r</code></td><td style="text-align:center">提取文件/输出</td></tr><tr><td style="text-align:center"><code>o</code></td><td style="text-align:center">打开新一行</td></tr></tbody></table></div><h2 id="插入类"><a href="#插入类" class="headerlink" title="插入类"></a>插入类</h2><div class="table-container"><table><thead><tr><th style="text-align:center">按键</th><th style="text-align:center">作用</th></tr></thead><tbody><tr><td style="text-align:center"><code>a</code></td><td style="text-align:center">光标后插入</td></tr><tr><td style="text-align:center"><code>i</code></td><td style="text-align:center">光标处插入</td></tr><tr><td style="text-align:center"><code>A</code></td><td style="text-align:center">行末插入</td></tr></tbody></table></div>]]></content>
+    
+    
+    <categories>
+      
+      <category>技巧</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>速查表</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>iptables笔记</title>
     <link href="/posts/44305/"/>
     <url>/posts/44305/</url>

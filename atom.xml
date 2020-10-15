@@ -6,7 +6,7 @@
   <link href="https://blog.yrpang.com/atom.xml" rel="self"/>
   
   <link href="https://blog.yrpang.com/"/>
-  <updated>2020-10-06T15:48:57.262Z</updated>
+  <updated>2020-10-15T10:13:20.026Z</updated>
   <id>https://blog.yrpang.com/</id>
   
   <author>
@@ -15,6 +15,42 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>vim速查表</title>
+    <link href="https://blog.yrpang.com/posts/40855/"/>
+    <id>https://blog.yrpang.com/posts/40855/</id>
+    <published>2020-10-15T09:40:09.000Z</published>
+    <updated>2020-10-15T10:13:20.026Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;operator&quot;&gt;&lt;a href=&quot;#operator&quot; class=&quot;headerlink&quot; title=&quot;operator&quot;&gt;&lt;/a&gt;operator&lt;/h2&gt;&lt;div class=&quot;table-container&quot;&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&quot;text-align:center&quot;&gt;按键&lt;/th&gt;
+&lt;th style=&quot;text-align:center&quot;&gt;作用&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;&lt;code&gt;x&lt;/code&gt;&lt;/td&gt;
+&lt;td</summary>
+        
+      
+    
+    
+    
+    <category term="技巧" scheme="https://blog.yrpang.com/categories/%E6%8A%80%E5%B7%A7/"/>
+    
+    
+    <category term="速查表" scheme="https://blog.yrpang.com/tags/%E9%80%9F%E6%9F%A5%E8%A1%A8/"/>
+    
+  </entry>
   
   <entry>
     <title>iptables笔记</title>
@@ -540,39 +576,6 @@
     <category term="uwsgi" scheme="https://blog.yrpang.com/tags/uwsgi/"/>
     
     <category term="http" scheme="https://blog.yrpang.com/tags/http/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>腾讯云 gaierror: Temporary failure in name resolution错误解决</title>
-    <link href="https://blog.yrpang.com/posts/25327/"/>
-    <id>https://blog.yrpang.com/posts/25327/</id>
-    <published>2019-04-09T05:47:19.000Z</published>
-    <updated>2019-11-09T05:52:53.844Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt;今天中午&lt;code&gt;看图猜话&lt;/code&gt;小程序的demo刚上线，告警群里就开始没完没了的报告脚本错误（此处略去心中一万句mmp…&lt;/p&gt;
-&lt;h2 id=&quot;问题：&quot;&gt;&lt;a href=&quot;#问题：&quot; class=&quot;headerlink&quot; title=&quot;问题：&quot;&gt;&lt;/a&gt;问题：&lt;/h2&gt;&lt;p&gt;看了一下&lt;code&gt;uwsgi.log&lt;/code&gt;发现如下错误没有规律的间歇性出现&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;hljs shell&quot;&gt;Internal Server Error: /
-Traceback (most recent call last):
-  File</summary>
-        
-      
-    
-    
-    
-    <category term="运维" scheme="https://blog.yrpang.com/categories/%E8%BF%90%E7%BB%B4/"/>
-    
-    
-    <category term="Linux" scheme="https://blog.yrpang.com/tags/Linux/"/>
-    
-    <category term="uwsgi" scheme="https://blog.yrpang.com/tags/uwsgi/"/>
-    
-    <category term="腾讯云" scheme="https://blog.yrpang.com/tags/%E8%85%BE%E8%AE%AF%E4%BA%91/"/>
     
   </entry>
   
