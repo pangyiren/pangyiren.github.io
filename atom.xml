@@ -6,7 +6,7 @@
   <link href="https://blog.yrpang.com/atom.xml" rel="self"/>
   
   <link href="https://blog.yrpang.com/"/>
-  <updated>2020-10-15T13:39:49.488Z</updated>
+  <updated>2020-11-03T07:05:27.565Z</updated>
   <id>https://blog.yrpang.com/</id>
   
   <author>
@@ -17,11 +17,37 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>使用ethtool永久修改网卡MAC地址</title>
+    <link href="https://blog.yrpang.com/posts/20682/"/>
+    <id>https://blog.yrpang.com/posts/20682/</id>
+    <published>2020-11-03T06:38:04.000Z</published>
+    <updated>2020-11-03T07:05:27.565Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;偶然看到一篇文章在谈如何使用&lt;code&gt;ethtool&lt;/code&gt;永久修改MAC地址，这里所谓的永久修改是指直接刷写进网卡的&lt;code&gt;EEPROM&lt;/code&gt;，第一次见到这样子的操作，不知道是不是所有网卡都可以，手边也暂时没设备可以测试，先mark一下。&lt;/p&gt;
+&lt;p&gt;原文：&lt;a href=&quot;https://blog.kanbach.org/post/how-to-permanently-change-a-mac-address-using-ethtool/&quot;&gt;How to permanently change a MAC address using</summary>
+        
+      
+    
+    
+    
+    <category term="运维" scheme="https://blog.yrpang.com/categories/%E8%BF%90%E7%BB%B4/"/>
+    
+    
+    <category term="Linux" scheme="https://blog.yrpang.com/tags/Linux/"/>
+    
+  </entry>
+  
+  <entry>
     <title>vim速查表</title>
     <link href="https://blog.yrpang.com/posts/40855/"/>
     <id>https://blog.yrpang.com/posts/40855/</id>
     <published>2020-10-15T09:40:09.000Z</published>
-    <updated>2020-10-15T13:39:49.488Z</updated>
+    <updated>2020-10-27T13:44:30.604Z</updated>
     
     
       
@@ -420,7 +446,7 @@
     <summary type="html">&lt;pre&gt;&lt;code class=&quot;hljs python&quot;&gt;&lt;span class=&quot;hljs-function&quot;&gt;&lt;span class=&quot;hljs-keyword&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;hljs-title&quot;&gt;tests&lt;/span&gt;(&lt;span class=&quot;hljs-params&quot;&gt;request&lt;/span&gt;):&lt;/span&gt;
 
     field_dict=&amp;#123;&amp;#125;
-    question = models.Questions.objects.all().order_by(&lt;span</summary>
+    question = models.Questions.objects.&lt;span</summary>
         
       
     
@@ -546,36 +572,6 @@
     <category term="机器学习" scheme="https://blog.yrpang.com/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
     
     <category term="数学建模" scheme="https://blog.yrpang.com/tags/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>访问网页的过程究竟发什么了什么</title>
-    <link href="https://blog.yrpang.com/posts/43826/"/>
-    <id>https://blog.yrpang.com/posts/43826/</id>
-    <published>2019-04-11T08:43:40.000Z</published>
-    <updated>2019-11-09T05:52:53.844Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h1 id=&quot;DNS查询得到IP&quot;&gt;&lt;a href=&quot;#DNS查询得到IP&quot; class=&quot;headerlink&quot; title=&quot;DNS查询得到IP&quot;&gt;&lt;/a&gt;DNS查询得到IP&lt;/h1&gt;&lt;p&gt;首先检查浏览器缓存 —&amp;gt; 检查本机缓存 —&amp;gt; 使用host —&amp;gt; 路由器缓存 —&amp;gt; DNS服务器递归查询&lt;/p&gt;
-&lt;p&gt;刷新Chrome缓存&lt;code&gt;chrome://net-internals/#dns&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;修改host会导致本机缓存被刷新，而浏览器缓存不刷新。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;清理本地缓存:&lt;/strong&gt; &lt;code&gt;sudo</summary>
-        
-      
-    
-    
-    
-    <category term="运维" scheme="https://blog.yrpang.com/categories/%E8%BF%90%E7%BB%B4/"/>
-    
-    
-    <category term="uwsgi" scheme="https://blog.yrpang.com/tags/uwsgi/"/>
-    
-    <category term="http" scheme="https://blog.yrpang.com/tags/http/"/>
     
   </entry>
   

@@ -13,7 +13,7 @@ data = pd.read_csv(<span class="hljs-string">&#x27;xxx.csv&#x27;</span>)
 data[<span class="hljs-string">&#x27;index&#x27;</span>] = pd.to_datetime(data[<span class="hljs-string">&#x27;index&#x27;</span>])
 print(data.groupby([data[<span class="hljs-string">&#x27;index&#x27;</span>].dt.year, data[<span class="hljs-string">&#x27;index&#x27;</span>].dt.month]).mean())
 print(data.groupby([data[<span class="hljs-string">&#x27;index&#x27;</span>].dt.year, data[<span class="hljs-string">&#x27;index&#x27;</span>].dt.month]).last())</code></pre></div><h2 id="4-PANDAS-数据合并与重塑"><a href="#4-PANDAS-数据合并与重塑" class="headerlink" title="4. PANDAS 数据合并与重塑"></a><a href="https://blog.csdn.net/weixin_37226516/article/details/64134643">4. PANDAS 数据合并与重塑</a></h2><h2 id="5-使用自定义函数处理数据"><a href="#5-使用自定义函数处理数据" class="headerlink" title="5. 使用自定义函数处理数据"></a>5. 使用自定义函数处理数据</h2><div class="hljs"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">equal_word</span>(<span class="hljs-params">B,A</span>):</span> <span class="hljs-comment"># A -&gt;关键词   B-&gt;品牌词</span>
-    A,B=str(A),str(B)
+    A,B=<span class="hljs-built_in">str</span>(A),<span class="hljs-built_in">str</span>(B)
     
     <span class="hljs-keyword">if</span> B <span class="hljs-keyword">in</span> A :  
         <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>  <span class="hljs-comment">#如果包含，返回False</span>

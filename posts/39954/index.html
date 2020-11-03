@@ -16,7 +16,7 @@
         openid: app.globalData.openid,
         teamid: team_id
       &#125;,
-      success(res)&#123;
+      <span class="hljs-function"><span class="hljs-title">success</span>(<span class="hljs-params">res</span>)</span>&#123;
         that.setData(&#123;
           [<span class="hljs-string">&#x27;teams[&#x27;</span> + num + <span class="hljs-string">&#x27;].mark&#x27;</span>] : !that.data.teams[num].mark <span class="hljs-comment">//关键在这里的实现</span>
         &#125;)
