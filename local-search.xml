@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>proc文件系统</title>
+    <link href="/posts/52529/"/>
+    <url>/posts/52529/</url>
+    
+    <content type="html"><![CDATA[<p>记录一些确定Linux系统状态定位问题的的指令。</p><h2 id="是什么？"><a href="#是什么？" class="headerlink" title="是什么？"></a>是什么？</h2><blockquote><p>The  proc filesystem is a pseudo-filesystem which provides an interface<br>to kernel data structures.  It is commonly  mounted  at  /proc.</p><p>from Linux Manual</p></blockquote><p>通过proc文件系统可以查看有关系统硬件及当前正在运行进程的信息，也可以通过更改其中某些文件来改变内核的运行状态。很多常用的工具(e.g. <code>top</code>、<code>free</code>)都是通过访问proc中的信息来工作的。</p><h2 id="文件proc下的文件："><a href="#文件proc下的文件：" class="headerlink" title="文件proc下的文件："></a>文件<code>proc</code>下的文件：</h2><ul><li><p><code>/proc/apm</code>高级电源管理（APM）版本信息及电池相关状态信息(当编译的时候<code>CONFIG_APM</code>为启用时才有效)</p></li><li><p><code>/proc/buddyinfo</code>用于诊断内存碎片问题的相关信息文件</p></li><li><p><code>/proc/interrupts</code>对于每个CPU的中断号以及中断次数</p></li><li><p><code>/proc/loadavg</code>关于CPU和磁盘I/O的负载平均值</p><pre><code class="hljs gherkin">➜  ~ cat /proc/loadavg0.63 0.77 0.85 1/156 6536  |<span class="hljs-string">    </span>|<span class="hljs-string">    </span>|<span class="hljs-string">  </span>|<span class="hljs-string">  </span>|<span class="hljs-string">    </span>|  |<span class="hljs-string">    </span>|<span class="hljs-string">    </span>|<span class="hljs-string">  </span>|<span class="hljs-string">  </span>|<span class="hljs-string">    </span>|  |<span class="hljs-string">    </span>|<span class="hljs-string">    </span>|<span class="hljs-string">  </span>|<span class="hljs-string">  </span>|<span class="hljs-string">    </span>|<span class="hljs-string">__最近一个由内核创建的进程的PID</span><span class="hljs-string">  </span>|<span class="hljs-string">    </span>|<span class="hljs-string">    </span>|<span class="hljs-string">  </span>|<span class="hljs-string">  </span>|<span class="hljs-string">_______系统当前存活的内核调度实体的数目</span><span class="hljs-string">  </span>|<span class="hljs-string">    </span>|<span class="hljs-string">    </span>|<span class="hljs-string">  </span>|<span class="hljs-string">__________正由内核调度的实体（进程和线程）的数目</span><span class="hljs-string">  </span>|<span class="hljs-string">    </span>|<span class="hljs-string">    </span>|<span class="hljs-string">_____________每15秒钟  </span><span class="hljs-string">  </span>|<span class="hljs-string">    </span>|<span class="hljs-string">__________________每5秒钟</span><span class="hljs-string">  </span>|<span class="hljs-string">_______________________每1秒钟</span></code></pre><p><code>/proc/uptime</code>系统上次启动以来的运行时间，第一个数字表示系统运行时间，第二个数字表示系统空闲时间，单位是秒。</p><p>uptime其实访问这两个文件</p><pre><code class="hljs angelscript">➜  ~ uptime <span class="hljs-number">19</span>:<span class="hljs-number">11</span>:<span class="hljs-number">47</span> up <span class="hljs-number">42</span> days,  <span class="hljs-number">3</span>:<span class="hljs-number">30</span>,  <span class="hljs-number">2</span> users,  load average: <span class="hljs-number">0.73</span>, <span class="hljs-number">0.86</span>, <span class="hljs-number">0.88</span></code></pre></li><li><p><code>/proc/meminfo</code>当前内存的利用状况等的信息，<code>free</code>访问的就是这个</p></li><li><p><code>/proc/modules</code>当前装入内核的所有模块名称列表，由<code>lsmod</code>命令使用</p></li><li><p><code>/proc/swaps</code>系统上的交换分区及其空间利用信息</p></li><li><p><code>/proc/zoneinfo</code>内存区域（zone）的详细信息列表</p></li><li><p><code>/proc/slabinfo</code>内存频繁使用的对象的cache（应该大体可以理解为系统占用的部分），该文件列出了这些对象相关slap的信息</p></li><li><p><code>/proc/stat</code>系统的一些运行信息，不同体系结构会不一样</p></li><li><p><code>/proc/vmstat</code>系统虚拟内存的多种统计数据</p></li><li><p>等等其它似乎用到的不多</p></li></ul><h2 id="进程下面的东西"><a href="#进程下面的东西" class="headerlink" title="进程下面的东西"></a>进程下面的东西</h2><p><code>proc/[num]</code>都系统进程的pid对应的状态文件，目录结构较为固定：</p><ul><li><code>cmdline</code>启动当前进程的完整命令</li><li><code>fd</code>目录包含当前进程打开的每一个文件的文件描述符（file descriptor）</li><li><code>limits</code>当前进程所使用的每一个受限资源的软限制、硬限制和管理单元</li><li><code>root</code>指向当前进程运行根目录的符号链接</li><li><code>stat</code>当前进程的状态信息</li><li><code>statm</code>进程占用内存的状态信息</li><li><code>status</code>与stat所提供信息类似，但可读性较好</li><li><code>task</code>当前进程所运行的每一个线程的相关信息</li></ul>]]></content>
+    
+    
+    <categories>
+      
+      <category>运维</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Linux</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>HTTPS相关</title>
     <link href="/posts/46833/"/>
     <url>/posts/46833/</url>
