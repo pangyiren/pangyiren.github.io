@@ -6,7 +6,7 @@
   <link href="https://blog.yrpang.com/atom.xml" rel="self"/>
   
   <link href="https://blog.yrpang.com/"/>
-  <updated>2020-11-07T14:44:32.217Z</updated>
+  <updated>2020-11-09T08:51:42.127Z</updated>
   <id>https://blog.yrpang.com/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>浅谈SSL和GPG</title>
+    <link href="https://blog.yrpang.com/posts/23547/"/>
+    <id>https://blog.yrpang.com/posts/23547/</id>
+    <published>2020-11-09T06:35:15.000Z</published>
+    <updated>2020-11-09T08:51:42.127Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;去年的这个时候因为想用GPG签名git提交学习了一下GPG的工作原理，还写了一篇博客简单记录。今年又是这个时候偶然看到了CloudFlare Blog 的一篇2015年的文章&lt;a href=&quot;https://blog.cloudflare.com/how-to-build-your-own-public-key-infrastructure/&quot;&gt;How to build your own public key</summary>
+        
+      
+    
+    
+    
+    <category term="运维" scheme="https://blog.yrpang.com/categories/%E8%BF%90%E7%BB%B4/"/>
+    
+    
+    <category term="GPG" scheme="https://blog.yrpang.com/tags/GPG/"/>
+    
+    <category term="SSL" scheme="https://blog.yrpang.com/tags/SSL/"/>
+    
+  </entry>
   
   <entry>
     <title>proc文件系统</title>
@@ -544,34 +571,6 @@
     <category term="Python" scheme="https://blog.yrpang.com/tags/Python/"/>
     
     <category term="后端" scheme="https://blog.yrpang.com/tags/%E5%90%8E%E7%AB%AF/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Django获取小程序码并返回</title>
-    <link href="https://blog.yrpang.com/posts/58401/"/>
-    <id>https://blog.yrpang.com/posts/58401/</id>
-    <published>2019-07-06T12:42:54.000Z</published>
-    <updated>2019-11-09T05:52:53.829Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt;今天实现小程序码获取和返回的一些功能遇到了一些问题，记录一下。&lt;/p&gt;
-&lt;h2 id=&quot;一、二维码的获取&quot;&gt;&lt;a href=&quot;#一、二维码的获取&quot; class=&quot;headerlink&quot;</summary>
-        
-      
-    
-    
-    
-    <category term="后端开发" scheme="https://blog.yrpang.com/categories/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91/"/>
-    
-    
-    <category term="Python" scheme="https://blog.yrpang.com/tags/Python/"/>
-    
-    <category term="小程序" scheme="https://blog.yrpang.com/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/"/>
     
   </entry>
   
