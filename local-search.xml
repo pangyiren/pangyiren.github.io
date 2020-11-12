@@ -4,6 +4,33 @@
   
   
   <entry>
+    <title>Wireshark Wi-Fi抓包</title>
+    <link href="/posts/55555/"/>
+    <url>/posts/55555/</url>
+    
+    <content type="html"><![CDATA[<p>最近这两天有点儿偏离主线了，稍微摆弄了一下之前去年这时候没弄懂咋用的<code>WireShark</code>，然后发现网上关于无线网络抓包的东西东一块西一块的，缺乏系统性整理，而且有些说法是错误的，所以写下这一篇粗浅的文章做一个简单整理和记录。</p><h2 id="系统环境"><a href="#系统环境" class="headerlink" title="系统环境"></a>系统环境</h2><p>因为操作系统和网卡驱动可能会影响，所以贴一下实验环境：</p><p>电脑: MacBook Pro (13-inch, 2017, Four Thunderbolt 3 Ports)<br>系统: MacOS 10.15.7 (19H15)</p><h2 id="抓包条件"><a href="#抓包条件" class="headerlink" title="抓包条件"></a>抓包条件</h2><p>在开始前先弄清<code>Wireshark</code>的两个模式选项:</p><blockquote><p><strong>Promiscuous mode</strong><br>In promiscuous mode the MAC address filter mentioned above is disabled and all packets of the currently joined 802.11 network (with a specific SSID and channel) are captured, just as in traditional Ethernet. However, on a “protected” network, packets from or to other hosts will not be able to be decrypted by the adapter, and will not be captured, so that promiscuous mode works the same as non-promiscuous mode.</p><p>This seems to work on Linux and various BSDs, including Mac OS X. On Windows, putting 802.11 adapters into promiscuous mode is usually crippled, see the Windows section below.</p><p><strong>Monitor mode</strong></p><p>In monitor mode the SSID filter mentioned above is disabled and <em>all</em> packets of <em>all</em> SSID’s from the currently selected channel are captured.</p><p>Even in <a href="https://wiki.wireshark.org/CaptureSetup/WLAN#promiscuous">promiscuous mode</a>, an 802.11 adapter will only supply to the host packets of the SSID the adapter has joined, assuming promiscuous mode works at all; even if it “works”, it might only supply to the host the same packets that would be seen in non-promiscuous mode. Although it can receive, at the radio level, packets on other SSID’s, it will not forward them to the host.</p><p>Therefore, in order to capture all traffic that the adapter can receive, the adapter must be put into “monitor mode”, sometimes called “rfmon mode”. In this mode, the driver will put the adapter in a mode where it will supply to the host packets from <em>all</em> service sets. Depending on the adapter and the driver, this might disassociate the adapter from the SSID, so that the machine will not be able to use that adapter for network traffic, or it might leave the adapter associated, so that it can still be used for network traffic.</p><p>——<a href="https://wiki.wireshark.org/CaptureSetup/WLAN">WLAN (IEEE 802.11) capture setup</a></p></blockquote><ul><li>混杂模式(Promiscuous)：让网卡把所有的包不管mac地址是不是发给自己的全都收进来</li><li>监视模式(Monitor Mode)：保留802.11原始头部，并且收指定信道（频率范围）能听到的所有信号，不管SSID是什么全都收进来</li></ul><p>在我的设备上测试结果是混杂模式不起作用，MacOS只给两个选择要么就开<code>Monitor Mode</code>全都收进来，要么就只收自己的，所以就分两种情况讨论下：</p><p>先说抓自己本机的，这个很容易不需要特殊配置，只要打开<code>Wireshark</code>选中自己的Wi-Fi网卡开始抓包就可以了，就算是加密的Wi-Fi出来的内容也已经是解密好的。</p><p>再说抓别人的，上面说过在我的测试环境下”混杂模式”没有起到预期的作用，所以就直接勾选无线网卡的”监视模式”，勾选后<code>Link-layer Header</code>就会变成<code>802.11 plus radiotap header</code>了。然后开启抓包，这时如果你处在像宿舍这样的周围无线信号很嘈杂的环境的话就能一下子看到非常多的报文了。</p><h3 id="选择指定的SSID"><a href="#选择指定的SSID" class="headerlink" title="选择指定的SSID"></a>选择指定的SSID</h3><p>选择<code>Wireless-&gt;WLAN Traffic</code>就可以打开<code>Wireshark</code>中的一个简单的无线网络分析工具，可以查看到Wireshark帮我们解析并统计出来的周围路由器以及和他们通信的设备，里面也包含了简要的通信量统计等信息。找到我们想要的路由器的<code>SSID</code>然后直接<code>Apply as Filter</code>就可以筛选出和这个路由器通信的包了。</p><p>如果你选择是一个没有密码的Wi-Fi，这时候就可以直接看到更上层的数据链路层报文了，如果恰好又有人在应用层使用HTTP通信的话那就可以直接看到内容，如果又恰好通信的内容也没有加密措施的话那就什么都能看到了。不过现在网站基本全都HTTPS了，应该基本是不存在这种情况了。</p><h3 id="解密"><a href="#解密" class="headerlink" title="解密"></a>解密</h3><p>如果是加密的Wi-Fi的话那对于使用WPA2个人级别加密的Wi-Fi的话，解密负载内容需要两个条件</p><ul><li>在<code>Preferences-&gt;Protocols-&gt;IEEE 802.11</code>中勾选<code>Enable Decryption</code>并且填上Wi-Fi的密码(格式：passwd:SSID)</li><li>抓取到设备连接时和路由器完整的四次握手，开始抓包后把手边的设备Wi-Fi断开然后重新连接下即可</li></ul><p>满足这两个条件之后就可以和没有密码的Wi-Fi一样看到更上层的传输内容了。</p><p>WPA2企业级有看到说法似乎是不大行，不过这点没有求证，存疑。</p><h2 id="其它工具"><a href="#其它工具" class="headerlink" title="其它工具"></a>其它工具</h2><ul><li>Wireshark的抓包结果和<code>tcpdump -I</code>下的结果一致</li><li>另外macOS在无限诊断工具中已经提供了抓包工具，按住<code>option</code>点Wi-Fi图标之后在窗口那里选择就好了，可以使用Wireshark分析抓取结果</li></ul><p>最后记录一下我对一些说法的异议</p><p>第一个，对于无线网络来说，你选择了信道也就是频率范围，那么该频率下的所有包不管是发给你的还是不是发给你的，也不管是谁发出来的你都可以收到，只是你能不能解密出内容的区别。所以并不会因为Wi-Fi路由器给出来的AP隔离之类的选项导致不能抓到包。这和有线连接交换机的设置是不一样的，不需要端口镜像，更不用arp欺骗。</p><p>第二个，暂时忘了…想起来了再补…</p><p><strong>有帮助的参考资料</strong></p><ol><li><a href="https://wiki.wireshark.org/CaptureSetup/WLAN">Wireshark文档: WLAN (IEEE 802.11) capture setup</a></li></ol>]]></content>
+    
+    
+    <categories>
+      
+      <category>安全</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>安全</tag>
+      
+      <tag>WireShark</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>浅谈SSL和GPG</title>
     <link href="/posts/23547/"/>
     <url>/posts/23547/</url>
@@ -97,9 +124,9 @@
     
     <tags>
       
-      <tag>后端</tag>
-      
       <tag>DNS</tag>
+      
+      <tag>后端</tag>
       
     </tags>
     
@@ -485,11 +512,11 @@
     
     <tags>
       
+      <tag>后端</tag>
+      
       <tag>Django</tag>
       
       <tag>Python</tag>
-      
-      <tag>后端</tag>
       
     </tags>
     
