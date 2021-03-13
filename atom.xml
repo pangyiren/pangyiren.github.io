@@ -6,7 +6,7 @@
   <link href="https://blog.yrpang.com/atom.xml" rel="self"/>
   
   <link href="https://blog.yrpang.com/"/>
-  <updated>2020-11-15T08:11:59.604Z</updated>
+  <updated>2021-03-13T13:48:02.355Z</updated>
   <id>https://blog.yrpang.com/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>NLP Representation token</title>
+    <link href="https://blog.yrpang.com/posts/57389/"/>
+    <id>https://blog.yrpang.com/posts/57389/</id>
+    <published>2021-03-13T13:41:06.000Z</published>
+    <updated>2021-03-13T13:48:02.355Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;The output of NLP Recognition System is a sequence of token. These tokens can be one of the following format:&lt;/p&gt;
+&lt;h2 id=&quot;1-Phoneme&quot;&gt;&lt;a href=&quot;#1-Phoneme&quot; class=&quot;headerlink&quot; title=&quot;1. Phoneme&quot;&gt;&lt;/a&gt;1. Phoneme&lt;/h2&gt;&lt;p&gt;The basic unit of sound.&lt;/p&gt;
+&lt;p&gt;We will need a Lexicon to make rejection from word</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>创建Apple设备描述文件并签名</title>
@@ -545,33 +568,6 @@
     
     
     
-    
-  </entry>
-  
-  <entry>
-    <title>浅谈GPG</title>
-    <link href="https://blog.yrpang.com/posts/37452/"/>
-    <id>https://blog.yrpang.com/posts/37452/</id>
-    <published>2019-11-03T09:56:54.000Z</published>
-    <updated>2020-02-25T12:04:13.908Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt;​        写这个是因为前几天在配置好GitHub actions后勉强可以在网页上直接写东西了，上面一篇内容就是在网页写的，然而在发布之后查看commit记录的时候我发现通过网页提交的commit旁边会有一个&lt;code&gt;Verified&lt;/code&gt;字样，点开以后会显示&lt;code&gt;This commit was created on GitHub.com and signed with a verified signature using GitHub’s key.&lt;/code&gt;</summary>
-        
-      
-    
-    
-    
-    <category term="技巧" scheme="https://blog.yrpang.com/categories/%E6%8A%80%E5%B7%A7/"/>
-    
-    
-    <category term="GPG" scheme="https://blog.yrpang.com/tags/GPG/"/>
-    
-    <category term="gitHub" scheme="https://blog.yrpang.com/tags/gitHub/"/>
     
   </entry>
   

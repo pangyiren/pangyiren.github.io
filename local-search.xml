@@ -4,6 +4,19 @@
   
   
   <entry>
+    <title>NLP Representation token</title>
+    <link href="/posts/57389/"/>
+    <url>/posts/57389/</url>
+    
+    <content type="html"><![CDATA[<p>The output of NLP Recognition System is a sequence of token. These tokens can be one of the following format:</p><h2 id="1-Phoneme"><a href="#1-Phoneme" class="headerlink" title="1. Phoneme"></a>1. Phoneme</h2><p>The basic unit of sound.</p><p>We will need a Lexicon to make rejection from word to phonemes.</p><h2 id="2-Grapheme"><a href="#2-Grapheme" class="headerlink" title="2. Grapheme"></a>2. Grapheme</h2><p>smallest unit of writing system.</p><p>For English is alphabets + space + other marks(optional).</p><p>For Chinese is “字”</p><h2 id="3-Word"><a href="#3-Word" class="headerlink" title="3. Word"></a>3. Word</h2><p>For English words are separated by spaces.</p><p>For Chinese word means “词语”.</p><p>Because there are very large of words in Chinese and some other language, it is not a good idea to use word as the basic representation unit.</p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>创建Apple设备描述文件并签名</title>
     <link href="/posts/6894/"/>
     <url>/posts/6894/</url>
