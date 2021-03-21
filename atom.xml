@@ -6,7 +6,7 @@
   <link href="https://blog.yrpang.com/atom.xml" rel="self"/>
   
   <link href="https://blog.yrpang.com/"/>
-  <updated>2021-03-21T13:40:47.471Z</updated>
+  <updated>2021-03-21T13:43:58.260Z</updated>
   <id>https://blog.yrpang.com/</id>
   
   <author>
@@ -21,23 +21,18 @@
     <link href="https://blog.yrpang.com/posts/60954/"/>
     <id>https://blog.yrpang.com/posts/60954/</id>
     <published>2021-03-21T06:00:00.000Z</published>
-    <updated>2021-03-21T13:40:47.471Z</updated>
+    <updated>2021-03-21T13:43:58.260Z</updated>
     
     
       
       
         
         
-    <summary type="html">&lt;h2 id=&quot;Basic&quot;&gt;&lt;a href=&quot;#Basic&quot; class=&quot;headerlink&quot; title=&quot;Basic&quot;&gt;&lt;/a&gt;Basic&lt;/h2&gt;&lt;ol&gt;
+    <summary type="html">&lt;p&gt;本文为&lt;a href=&quot;https://git-scm.com/book/zh/v2&quot;&gt;Pro Git&lt;/a&gt;阅读笔记，整理了日常操作中涉及到的git操作。&lt;/p&gt;
+&lt;h2 id=&quot;Basic&quot;&gt;&lt;a href=&quot;#Basic&quot; class=&quot;headerlink&quot; title=&quot;Basic&quot;&gt;&lt;/a&gt;Basic&lt;/h2&gt;&lt;ol&gt;
 &lt;li&gt;&lt;p&gt;&lt;code&gt;git xxx -h&lt;/code&gt; 可以查看该命令参数的简要介绍&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;code&gt;git help xxx&lt;/code&gt;可以查看详细文档&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;命令中&lt;code&gt;--&lt;/code&gt;用来区分参数和文件路径(e.g. &lt;code&gt;git checkout -- &amp;lt;file&amp;gt;&lt;/code&gt;)&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2</summary>
+&lt;li&gt;&lt;code&gt;git help</summary>
         
       
     
