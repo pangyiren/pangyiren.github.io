@@ -6,7 +6,7 @@
   <link href="https://blog.yrpang.com/atom.xml" rel="self"/>
   
   <link href="https://blog.yrpang.com/"/>
-  <updated>2021-03-21T13:36:47.228Z</updated>
+  <updated>2021-03-21T13:40:47.471Z</updated>
   <id>https://blog.yrpang.com/</id>
   
   <author>
@@ -18,10 +18,10 @@
   
   <entry>
     <title>Git Review Memo</title>
-    <link href="https://blog.yrpang.com/posts/1/"/>
-    <id>https://blog.yrpang.com/posts/1/</id>
-    <published>2021-03-21T13:36:47.228Z</published>
-    <updated>2021-03-21T13:36:47.228Z</updated>
+    <link href="https://blog.yrpang.com/posts/60954/"/>
+    <id>https://blog.yrpang.com/posts/60954/</id>
+    <published>2021-03-21T06:00:00.000Z</published>
+    <updated>2021-03-21T13:40:47.471Z</updated>
     
     
       
@@ -43,6 +43,8 @@
     
     
     
+    
+    <category term="git" scheme="https://blog.yrpang.com/tags/git/"/>
     
   </entry>
   
