@@ -6,7 +6,7 @@
   <link href="https://blog.yrpang.com/atom.xml" rel="self"/>
   
   <link href="https://blog.yrpang.com/"/>
-  <updated>2020-11-15T08:11:59.604Z</updated>
+  <updated>2021-03-21T13:36:47.228Z</updated>
   <id>https://blog.yrpang.com/</id>
   
   <author>
@@ -15,6 +15,36 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Git Review Memo</title>
+    <link href="https://blog.yrpang.com/posts/1/"/>
+    <id>https://blog.yrpang.com/posts/1/</id>
+    <published>2021-03-21T13:36:47.228Z</published>
+    <updated>2021-03-21T13:36:47.228Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;Basic&quot;&gt;&lt;a href=&quot;#Basic&quot; class=&quot;headerlink&quot; title=&quot;Basic&quot;&gt;&lt;/a&gt;Basic&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;git xxx -h&lt;/code&gt; 可以查看该命令参数的简要介绍&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;git help xxx&lt;/code&gt;可以查看详细文档&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;命令中&lt;code&gt;--&lt;/code&gt;用来区分参数和文件路径(e.g. &lt;code&gt;git checkout -- &amp;lt;file&amp;gt;&lt;/code&gt;)&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>创建Apple设备描述文件并签名</title>
@@ -545,33 +575,6 @@
     
     
     
-    
-  </entry>
-  
-  <entry>
-    <title>浅谈GPG</title>
-    <link href="https://blog.yrpang.com/posts/37452/"/>
-    <id>https://blog.yrpang.com/posts/37452/</id>
-    <published>2019-11-03T09:56:54.000Z</published>
-    <updated>2020-02-25T12:04:13.908Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt;​        写这个是因为前几天在配置好GitHub actions后勉强可以在网页上直接写东西了，上面一篇内容就是在网页写的，然而在发布之后查看commit记录的时候我发现通过网页提交的commit旁边会有一个&lt;code&gt;Verified&lt;/code&gt;字样，点开以后会显示&lt;code&gt;This commit was created on GitHub.com and signed with a verified signature using GitHub’s key.&lt;/code&gt;</summary>
-        
-      
-    
-    
-    
-    <category term="技巧" scheme="https://blog.yrpang.com/categories/%E6%8A%80%E5%B7%A7/"/>
-    
-    
-    <category term="GPG" scheme="https://blog.yrpang.com/tags/GPG/"/>
-    
-    <category term="gitHub" scheme="https://blog.yrpang.com/tags/gitHub/"/>
     
   </entry>
   
